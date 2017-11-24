@@ -1,0 +1,426 @@
+@font-face {
+    font-family: 'OuestFranceMBIGras';
+    src: url('mbib.woff') format('woff');
+}
+
+@font-face {
+    font-family: 'OuestFranceRCIRegular';
+    src: url('rci.woff') format('woff');
+}
+
+@font-face {
+    font-family: 'OuestFranceRCIGras';
+    src: url('rcib.woff') format('woff');
+}
+/***************************/
+
+@font-face {
+	font-family: 'fontello';
+	src: url('../font/fontello.eot?87235315');
+	src: url('../font/fontello.eot?87235315#iefix') format('embedded-opentype'),
+		 url('../font/fontello.woff?87235315') format('woff'),
+		 url('../font/fontello.ttf?87235315') format('truetype'),
+		 url('../font/fontello.svg?87235315#fontello') format('svg');
+	font-weight: normal;
+	font-style: normal;
+  }
+
+.demo-icon
+    {
+      font-family: "fontello";
+      font-style: normal;
+      font-weight: normal;
+      speak: none;
+     
+      display: inline-block;
+      text-decoration: inherit;
+      width: 1em;
+      margin-right: .2em;
+      text-align: center;
+      /* opacity: .8; */
+     
+      /* For safety - reset parent styles, that can break glyph codes*/
+      font-variant: normal;
+      text-transform: none;
+     
+      /* fix buttons height, for twitter bootstrap */
+      line-height: 1em;
+     
+      /* Animation center compensation - margins should be symmetric */
+      /* remove if not needed */
+      margin-left: .2em;
+     
+      /* You can be more comfortable with increased icons size */
+      /* font-size: 120%; */
+     
+      /* Font smoothing. That was taken from TWBS */
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+     
+      /* Uncomment for 3D effect */
+      /* text-shadow: 1px 1px 1px rgba(127, 127, 127, 0.3); */
+    }
+
+.container-inner {
+	display: block;
+	margin: 0 auto;
+	position: relative;
+}
+.container-outer {
+    overflow-x: auto;
+	overflow-y: hidden;
+	width: 100%;
+	/* height: 100%; */
+}
+
+#mute {
+	display: inline-block;
+	float: left;
+}
+
+#hint{
+	position: absolute;
+	border-radius:100%;
+	background: -moz-radial-gradient(center, ellipse cover,  rgba(255,0,0,1) 0%, rgba(255,0,0,0) 72%);
+	background: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(0%,rgba(255,0,0,1)), color-stop(72%,rgba(255,0,0,0)));
+	background: -webkit-radial-gradient(center, ellipse cover,  rgba(255,0,0,1) 0%,rgba(255,0,0,0) 72%);
+	background: -o-radial-gradient(center, ellipse cover,  rgba(255,0,0,1) 0%,rgba(255,0,0,0) 72%);
+	background: -ms-radial-gradient(center, ellipse cover,  rgba(255,0,0,1) 0%,rgba(255,0,0,0) 72%);
+	background: radial-gradient(ellipse at center,  rgba(255,0,0,1) 0%,rgba(255, 0, 0, 0) 72%);
+	animation: hint 1s infinite;
+	-webkit-animation: hint 1s infinite;
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#b8ffffff', endColorstr='#00ffffff',GradientType=1 );
+	
+}
+
+
+#base {
+	width: 100%;
+	height: 100%;
+}
+
+svg{
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	top: 0;
+    left: 0;
+}
+
+svg > *{
+	fill: transparent;
+    stroke: transparent;
+}
+#score .counter {
+	text-align: center;
+	font-family: 'OuestFranceMBIGras';
+	display: block;
+	position: relative;
+}
+
+#hintDiv{
+	width: 100%;
+    position: relative;
+}
+
+.found {
+	position: absolute;
+	stroke-dasharray: 153;
+	stroke-dashoffset: 0;
+	animation: dash .2s linear;
+	-webkit-stroke-dasharray: 153;
+	-webkit-stroke-dashoffset: 0;
+	-webkit-animation: dash .2s linear;
+	-moz-stroke-dasharray: 153;
+	-moz-stroke-dashoffset: 0;
+	-moz-animation: dash .2s linear;
+}
+
+.found svg > * {
+	stroke: green;
+}
+
+.error{
+	position: absolute;
+    width: 50px;
+	height: 50px;
+	background:rgba(255,0,0,0);
+	animation: fadeOut 2.3s ease;
+	-webkit-animation: fadeOut 2.3s ease;
+	-moz-animation: fadeOut 2.3s ease;
+} 
+	
+
+.error svg > * {
+	stroke: red;
+}
+
+#score{
+	display: block;
+	position: relative;
+	height: 1.2rem;
+    background: #eceded;
+}
+
+#HUD{
+	margin: 0 auto;
+}
+
+#progressBar{
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 0%;
+	height: 100%;
+	-webkit-transition: all .4s ease;
+	-moz-transition: all .4s ease;
+	transition: all .4s ease;
+}
+
+.btn{
+	padding: .5em 1em;
+	background: #2083ec;
+	color: #fff;
+	vertical-align: middle;
+	border-radius: 3px;
+	cursor: pointer;
+}
+
+.btn:hover{
+	opacity: .9;
+}
+
+#btn_hint{
+	display: inline-block;
+	float: right;
+	vertical-align: middle;
+	text-align: center;
+}
+
+#btn_hint.disabled{
+	background: #eceded;
+	color: #878787;
+	cursor: default;
+}
+/***************************/
+
+*{
+	margin:0;
+	padding:0;
+	-webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+*, *:before, *:after {
+  box-sizing: border-box;
+}
+html{ font-size:20px; }
+
+html,body{
+	height:100%;
+}
+
+body{
+	font-family:Arial, sans-serif;
+	-webkit-tap-highlight-color: rgba(0,0,0,0);
+	background-color:#fff;
+	background-position: top;
+	background-size: 100% auto;
+	background-repeat: no-repeat;
+	color: #222;
+	font-family: 'OuestFranceRCIRegular';
+}
+
+b{
+	font-weight: normal;
+	font-family: 'OuestFranceMBIGras';
+}
+
+
+/******** HEADER **********************************************/
+
+#categorie{
+	float:left;
+	margin:25px 0 38px 0;
+	font-size:18px;
+	text-transform:uppercase;
+}
+
+#categorie img{
+	border-right:1px solid #222;
+	margin-right:10px;
+	display:inline;
+	height:17px;
+	width:auto;
+}
+
+/*******************************************************************************/
+.clearfix:after{
+	content: "";
+	display: block;
+	clear: both;
+}
+
+
+h1{
+	margin-bottom: .3em;
+	font-weight: normal;
+	font-family: 'OuestFranceMBIGras';
+	font-size: 2.2rem;
+}
+
+#wrapper{
+	width:100%;
+	height:100%;
+	overflow-y:auto;
+	-webkit-overflow-scrolling: touch;
+	padding: 0 0 2.5rem 0;
+}
+
+
+.accroche{
+	padding-top: .5em;
+	padding-bottom: 1em;
+	margin-bottom: 0;
+	margin-top: 0em;
+    font-size: 1.27rem;
+}
+
+/******************************/
+
+#screen_home{
+	padding-left: 10%;
+	padding-right: 10%;
+}
+
+
+@keyframes dash {
+  	from {
+    	stroke-dashoffset: 153;
+  	}
+  	to {
+    	stroke-dashoffset: 0;
+  	}
+}
+
+@-webkit-keyframes dash {
+  	from {
+    	stroke-dashoffset: 153;
+  	}
+  	to {
+    	stroke-dashoffset: 0;
+  	}
+}
+
+@-moz-keyframes dash {
+  	from {
+    	stroke-dashoffset: 153;
+  	}
+  	to {
+    	stroke-dashoffset: 0;
+  	}
+}
+
+
+@keyframes shine {
+  	0%{opacity: 1;}
+	18%{opacity: 1;}
+	30%{opacity: .2;}
+	80%{opacity: 1;}
+	100%{opacity: 1;}
+}
+
+@-webkit-keyframes shine{
+	0%{opacity: 1;}
+	18%{opacity: 1;}
+	30%{opacity: .2;}
+	80%{opacity: 1;}
+	100%{opacity: 1;}
+}
+
+@-moz-keyframes shine{
+	0%{opacity: 1;}
+	18%{opacity: 1;}
+	30%{opacity: .2;}
+	80%{opacity: 1;}
+	100%{opacity: 1;}
+}
+
+@keyframes fadeOut {
+  	0%{opacity: 1;}
+	100%{opacity: 0;}
+}
+
+@-webkit-keyframes fadeOut{
+	0%{opacity: 1;}
+	100%{opacity: 0;}
+}
+
+@-moz-keyframes fadeOut{
+	0%{opacity: 1;}
+	100%{opacity: 0;}
+}
+
+.hint{
+	position: absolute;
+	width:100%;
+	padding-bottom:100%;
+	margin-top:-50%;
+	margin-left:-50%;
+	top:0;
+	left:0;
+	border-radius:100%;
+	background: -moz-radial-gradient(center, ellipse cover,  rgba(255,0,0,1) 0%, rgba(255,0,0,0) 59%);
+	background: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(0%,rgba(255,0,0,1)), color-stop(59%,rgba(255,0,0,0)));
+	background: -webkit-radial-gradient(center, ellipse cover,  rgba(255,0,0,1) 0%,rgba(255,0,0,0) 59%);
+	background: -o-radial-gradient(center, ellipse cover,  rgba(255,0,0,1) 0%,rgba(255,0,0,0) 59%);
+	background: -ms-radial-gradient(center, ellipse cover,  rgba(255,0,0,1) 0%,rgba(255,0,0,0) 59%);
+	background: radial-gradient(ellipse at center,  rgba(255,0,0,1) 0%,rgba(255,0,0,0) 59%);
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#b8ffffff', endColorstr='#00ffffff',GradientType=1 );
+	animation: hint 1s infinite;
+	-webkit-animation: hint 1s infinite;
+	display:none;
+	z-index: 0;
+}
+
+
+@keyframes hint {
+  0% { opacity:0; }
+  50% { opacity:.6; }
+  100% { opacity:0; }
+}
+@-webkit-keyframes hint {
+  0% { opacity:0; }
+  50% { opacity:.6; }
+  100% { opacity:0; }
+}
+
+@media screen and (max-width: 600px){
+	html{
+		font-size:16px;
+	}
+	#categorie {
+	    float: left;
+	    margin: 10px 0 18px 0;
+	    font-size: 18px;
+	    top: 0;
+	    position: relative;
+		margin-left: 12%;
+	}
+	#categorie img{
+		border-right:0;
+		display: block;
+	}
+}
+
+@media screen and (max-width: 400px){
+	html{
+		font-size:15px;
+	}
+	h1{
+		font-size:1.8rem;
+	}
+}

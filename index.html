@@ -22,7 +22,9 @@
             </p>
         </div>
         
-        <div id="surveyGame"></div>
+        <div id="surveyGame">
+            <div class="restart_btn btn">Recommencer</div>
+        </div>
         <div id="hitRemaining">
             <b>Coups restants&nbsp;:</b> <span id="remaining">10</span>
         </div>
@@ -77,8 +79,8 @@ $(document).ready(function() {
     $("#score .counter").text((questionNum) + " / " + json.survey.length)
     stepColorSetter()
     color = startColor;
-    $('svg > *:not(#back)').on('click', function(e){clickOnSvg(e, $(this))});
-    $('#back').on('click', function(e){error(e)});
+    $('svg > *:not(:first-child)').on('click', function(e){clickOnSvg(e, $(this))});
+    $('svg > *:first-child').on('click', function(e){error(e)});
     $('#mute').on('click', function(){
         if(!mute){
             $("#mute i").html(iconSoundOff)
@@ -121,7 +123,7 @@ function onLoad(){
     }, '*');
 
     FastClick.attach(document.body);
-    $('#restart_btn').on('click', function(){
+    $('.restart_btn').on('click', function(){
         window.location.href = window.location.href;
     });
     $('#btn_hint').on('click', showHint);
@@ -144,6 +146,7 @@ function changeColor(){
 function error(e){
     errorAllowed--;
     $('#remaining').html(errorAllowed);
+    if(!errorAllowed) finishGame()
     var el = $("#base");
     var x = (e.clientX -25 ) / el.width() * 100;
     var y = (e.clientY -el.offset().top - 25) / el.height() * 100;
@@ -191,13 +194,27 @@ function clickOnSvg(e, el){
             currentObj = json.survey[questionNum]
             $("#surveyGame p").replaceWith("<p>" + currentObj.question + "</p>")
         }else{
-            $("#surveyGame p").replaceWith("<p> Congratulations !!!!!!!!!! </p>")
+            finishGame()
         }
         if(!mute) winsong.play();
     }
     else{
         this.error(e)
     }
+}
+
+function finishGame(){
+    $("#surveyGame p").empty()
+    $("#surveyGame .restart_btn").show()
+    $('svg > *:not(:first-child)').off('click');
+    $('svg > *:first-child').off('click');
+    for (var i = questionNum; i < json.survey.length ; i ++){
+        var answer = json.survey[i].answer;
+        var obj = $("." + answer)
+        if(!obj.length) obj = $("#" + answer)
+        addCircle(obj)
+    }
+
 }
 
 function showHint(){
@@ -236,28 +253,6 @@ function displayHint() {
     pos.top = Math.round(Math.random() * (bbox.height) + pos.top - bbox.height*hintRatio/2)
     pos.left = Math.round(Math.random() * (bbox.width) + pos.left - bbox.width*hintRatio/2)
     $("#hint").css({"top": pos.top, "left": pos.left, "display":"block"}).width(bbox.width*hintRatio).height(bbox.height*hintRatio).fadeOut(3000)
-}
-
-// function displayHint(){
-//     obj.addClass("on")
-//     obj.height(obj.height()*2);
-//     console.log(obj[0].getBoundingClientRect())
-//     console.log(obj.offset())
-// }
-
-function stopEvent(e) {
-    if(!e) var e = window.event;
- 
-    //e.cancelBubble is supported by IE -
-    // this will kill the bubbling process.
-    e.cancelBubble = true;
-    e.returnValue = false;
- 
-    //e.stopPropagation works only in Firefox.
-    if ( e.stopPropagation ) e.stopPropagation();
-    if ( e.preventDefault ) e.preventDefault();     
- 
-    return false;
 }
 
 window.origin = 'WALDO';

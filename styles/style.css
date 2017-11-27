@@ -25,6 +25,16 @@
 	font-style: normal;
   }
 
+.restart_btn{
+	display: none;
+	text-align: center;
+}
+
+#surveyGame p{
+	text-align: center;
+    font-weight: 600;
+}
+
 .demo-icon
     {
       font-family: "fontello";

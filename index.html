@@ -23,18 +23,25 @@
         </div>
         
         <div id="surveyGame">
-            <div class="restart_btn btn">Recommencer</div>
-        </div>
-        <div id="hitRemaining">
-            <b>Coups restants&nbsp;:</b> <span id="remaining">10</span>
+            <p></p>
+            <div style="text-align: center;">
+                <div class="restart_btn btn">Recommencer</div>
+            </div>
         </div>
         
         <div id="HUD">
-            <div id=hintDiv>
-                <span id="mute" class="btn btn-small"><i class="demo-icon"></i></span>
-                <span id="btn_hint" class="btn btn-small">Indice</span>
+            <div>
+                <div>
+                    <span id="mute" class="btn btn-small"><i class="demo-icon"></i></span>
+                </div>
+                <div id=hintDiv>
+                    <span id="btn_hint" class="btn btn-small">Indice</span>
+                </div>
+                <div id="hitRemaining">
+                    <b>Coups restants&nbsp;:</b> <span id="remaining">10</span>
+                </div>
             </div>
-            <div style="clear:both"></div>
+            <div style="clear:both"></div>            
             <div id="score">
                 <div id="progressBar"></div>
                 <span class="counter"></span>
@@ -45,7 +52,7 @@
                     <img id="base" src="img/waldo.jpg" alt=""/>
                     <div id="hint"></div>
                     <svg viewBox="0 0 1024 768" xmlns="http://www.w3.org/2000/svg">
-                        <rect id="back" height="768" width="1024" y="0" x="0"/>
+                        <rect height="768" width="1024" y="0" x="0"/>
                          <ellipse class="" ry="34.317017" rx="22.044706" id="waldo" cy="296.126312" cx="511.573545" stroke-width="2" stroke="#000" fill="#fff"/>
                          <rect class="cabin" id="svg_3" height="86.360705" width="55.452663" y="219.538003" x="598.616045" stroke-width="1.5" stroke="#000" fill="#fff"/>
                          <ellipse class="whiteRedBall" ry="22.963163" rx="23.703911" id="svg_3" cy="633.338836" cx="517.041548" stroke-width="1.5" stroke="#000" fill="#fff"/>
@@ -75,7 +82,7 @@ $(document).ready(function() {
     var img = document.getElementById('base');
     //$(".container-inner, .container-inner svg").css("width", img.clientWidth);
     //$(".container-inner, .container-inner svg").css("height", img.clientHeight);
-    $("#surveyGame").append("<p>" + currentObj.question + "</p>")
+    $("#surveyGame p").html(currentObj.question)
     $("#score .counter").text((questionNum) + " / " + json.survey.length)
     stepColorSetter()
     color = startColor;
@@ -97,6 +104,8 @@ var json = JSON.parse('{"survey":[{"question":"Find Waldo","answer":"waldo"},{"q
 var questionNum = 0,
     found = 0,
     errorAllowed = 5,
+    errorMsg = 'Vous avez perdu',
+    winMsg = 'Gagné ! Vous avez tout trouvé',
     hintRatio = 6,
     currentObj = {},
     hint_delay = 7,
@@ -146,14 +155,13 @@ function changeColor(){
 function error(e){
     errorAllowed--;
     $('#remaining').html(errorAllowed);
-    if(!errorAllowed) finishGame()
+    if(!errorAllowed) finishGame(errorMsg)
     var el = $("#base");
     var x = (e.clientX -25 ) / el.width() * 100;
     var y = (e.clientY -el.offset().top - 25) / el.height() * 100;
     var crossHTML = '<div class="error" style="'
                 + 'top:'+y+'%;'
                 + 'left:'+x+'%;'
-                + 'z-index:0;'
                 + '">'+crossSVG+'</div>';
     var cross = $(crossHTML)
     $('.container-inner').append(cross);
@@ -176,7 +184,6 @@ function addCircle(el){
             + 'left:'+pos.left+'px;'
             + 'width:'+bbox.width+'px;'
             + 'height:'+bbox.height+'px;'
-            + 'z-index:0;'
             + '">'+circleSVG+'</div>';
     $(round).insertAfter( "#base" );
 }
@@ -194,7 +201,7 @@ function clickOnSvg(e, el){
             currentObj = json.survey[questionNum]
             $("#surveyGame p").replaceWith("<p>" + currentObj.question + "</p>")
         }else{
-            finishGame()
+            finishGame(winMsg)
         }
         if(!mute) winsong.play();
     }
@@ -203,8 +210,8 @@ function clickOnSvg(e, el){
     }
 }
 
-function finishGame(){
-    $("#surveyGame p").empty()
+function finishGame(msg){
+    $("#surveyGame p").html(msg)
     $("#surveyGame .restart_btn").show()
     $('svg > *:not(:first-child)').off('click');
     $('svg > *:first-child').off('click');

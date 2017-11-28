@@ -26,7 +26,7 @@
   }
 
 .restart_btn{
-	display: none;
+	/* display: none; */
 	text-align: center;
 }
 
@@ -97,9 +97,9 @@
 	background: -o-radial-gradient(center, ellipse cover,  rgba(255,0,0,1) 0%,rgba(255,0,0,0) 72%);
 	background: -ms-radial-gradient(center, ellipse cover,  rgba(255,0,0,1) 0%,rgba(255,0,0,0) 72%);
 	background: radial-gradient(ellipse at center,  rgba(255,0,0,1) 0%,rgba(255, 0, 0, 0) 72%);
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#b8ffffff', endColorstr='#00ffffff',GradientType=1 );
 	animation: hint 1s infinite;
 	-webkit-animation: hint 1s infinite;
-	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#b8ffffff', endColorstr='#00ffffff',GradientType=1 );
 	
 }
 
@@ -121,6 +121,7 @@ svg > *{
 	fill: transparent;
     stroke: transparent;
 }
+
 #score .counter {
 	text-align: center;
 	font-family: 'OuestFranceMBIGras';
@@ -128,9 +129,8 @@ svg > *{
 	position: relative;
 }
 
-#hintDiv{
-	width: 100%;
-    position: relative;
+#hitRemaining{
+	text-align: center;
 }
 
 .found {
@@ -194,6 +194,7 @@ svg > *{
 	vertical-align: middle;
 	border-radius: 3px;
 	cursor: pointer;
+	display: inline-block;
 }
 
 .btn:hover{

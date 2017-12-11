@@ -35,6 +35,32 @@
     font-weight: 600;
 }
 
+.result {
+	margin: 0% 10%;
+	display:none;
+	-webkit-transition: all 1s;
+	-moz-transition: all 1s;
+	-o-transition: all 1s;
+	transition: all 1s;
+}
+
+.comment.green {
+    color: #29c529;
+}
+
+.comment.red {
+    color: rgb(202, 41, 31);
+}
+
+.comment.red {
+    color: rgb(202, 41, 31);
+}
+
+.comment {
+    text-align: center;
+    font-size: 2.5em;
+}
+
 .demo-icon
     {
       font-family: "fontello";

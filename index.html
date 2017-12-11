@@ -24,11 +24,7 @@
         
         <div id="surveyGame">
             <p></p>
-            <div style="text-align: center;">
-                <div class="restart_btn btn">Recommencer</div>
-            </div>
         </div>
-        
         <div id="HUD">
             <div>
                 <div>
@@ -64,6 +60,17 @@
                        </svg>
 
                     
+            </div>
+            <div class="result">
+                <p><b>C'est quoi cette photo&nbsp;?</b></p>
+                <p>
+                <!-- LEGEND DELIMITER -->
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat<!-- LEGEND DELIMITER -->
+                </p>
+
+                <div style="text-align: center">
+                    <div class="restart_btn btn">Recommencer</div>
+                </div>
             </div>
         </div>
     </div>
@@ -104,8 +111,8 @@ var json = JSON.parse('{"survey":[{"question":"Find Waldo","answer":"waldo"},{"q
 var questionNum = 0,
     found = 0,
     errorAllowed = 5,
-    errorMsg = 'Vous avez perdu',
-    winMsg = 'Gagné ! Vous avez tout trouvé',
+    errorMsg = 'Raté !',
+    winMsg = 'Bravo !',
     hintRatio = 6,
     currentObj = {},
     hint_delay = 7,
@@ -155,7 +162,7 @@ function changeColor(){
 function error(e){
     errorAllowed--;
     $('#remaining').html(errorAllowed);
-    if(!errorAllowed) finishGame(errorMsg)
+    if(!errorAllowed) finishGame(errorMsg, false)
     var el = $("#base");
     var x = (e.clientX -25 ) / el.width() * 100;
     var y = (e.clientY -el.offset().top - 25) / el.height() * 100;
@@ -201,7 +208,7 @@ function clickOnSvg(e, el){
             currentObj = json.survey[questionNum]
             $("#surveyGame p").replaceWith("<p>" + currentObj.question + "</p>")
         }else{
-            finishGame(winMsg)
+            finishGame(winMsg, true)
         }
         if(!mute) winsong.play();
     }
@@ -210,11 +217,14 @@ function clickOnSvg(e, el){
     }
 }
 
-function finishGame(msg){
-    $("#surveyGame p").html(msg)
-    $("#surveyGame .restart_btn").show()
+function finishGame(msg,win){
+    var className = (win)? "green" : "red"
+    $("#surveyGame p").addClass("comment " + className).html(msg)
+    $("#gameSet").addClass("result")
+    $(".result").show()
     $('svg > *:not(:first-child)').off('click');
     $('svg > *:first-child').off('click');
+    $('.found').remove
     for (var i = questionNum; i < json.survey.length ; i ++){
         var answer = json.survey[i].answer;
         var obj = $("." + answer)
